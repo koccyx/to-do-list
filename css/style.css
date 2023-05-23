@@ -116,6 +116,9 @@ body ::-webkit-scrollbar {
 .btn__remove {
 }
 
+._done {
+    text-decoration: line-through;
+}
 
 @media screen and (max-width: 430px) {
     .container {
