@@ -1,18 +1,33 @@
-import {taskArr, Task, $list, $textArea, $curBtn, $doneBtn, $addBtn} from './const.js'
+import {taskArr, Task, $list, $textArea, $curBtn, $doneBtn, $addBtn, $doneList, $listContainer} from './const.js'
 
 function update() {
     $list.innerHTML = '';
+    $doneList.innerHTML = '';
+    console.log($doneList);
     for(let obj of taskArr) {
-        $list.insertAdjacentHTML("afterbegin",`
-        <div class="task ${obj.condition}" data-id="${obj.id}">
-            <p class="task__text">${obj.text}</p>
-            <div class="task__btn_container">
-                <button class="task__btn btn__done"><i class="fa-solid fa-check"></i></button>
-                <button class="task__btn btn__remove"><i class="fa-solid fa-xmark"></i></button>
+        if (obj.condition == '_done') {
+            $doneList.insertAdjacentHTML("afterbegin",`
+            <div class="task ${obj.condition}" data-id="${obj.id}">
+                <p class="task__text">${obj.text}</p>
+                <div class="task__btn_container">
+                    <button class="task__btn btn__done"><i class="fa-solid fa-check"></i></button>
+                    <button class="task__btn btn__remove"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             </div>
-        </div>
-        `
-        )
+            `
+            )
+         } else {
+            $list.insertAdjacentHTML("afterbegin",`
+                <div class="task ${obj.condition}" data-id="${obj.id}">
+                    <p class="task__text">${obj.text}</p>
+                    <div class="task__btn_container">
+                        <button class="task__btn btn__done"><i class="fa-solid fa-check"></i></button>
+                        <button class="task__btn btn__remove"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+                `
+            )
+         }
     }
 }
 
@@ -25,10 +40,12 @@ $addBtn.addEventListener('click', (event) => {
     $textArea.value = '';
     taskArr.push(tempTask);
     update();
+    $list.hidden = false;
+    $doneList.hidden = true;
 })
 
 
-$list.addEventListener('click', (event) => {
+$listContainer.addEventListener('click', (event) => {
     if (!taskArr.length) return;
     if (!event.target.closest('.btn__remove')) return;
 
@@ -38,11 +55,13 @@ $list.addEventListener('click', (event) => {
     update();
 })
 
-$list.addEventListener('click', (event) => {
+$listContainer.addEventListener('click', (event) => {
     if (!taskArr.length) return;
     if (!event.target.closest('.btn__done')) return;
 
     let $task = event.target.closest('.task');
+
+
 
     let taskObj = taskArr[taskArr.findIndex((item) => item.id == $task.dataset.id)];
 
@@ -53,4 +72,15 @@ $list.addEventListener('click', (event) => {
     }
     console.log(taskObj.condition);
     update();
+})
+
+
+$doneBtn.addEventListener('click', (event) => {
+    $list.hidden = true;
+    $doneList.hidden = false;
+})
+
+$curBtn.addEventListener('click', (event) => {
+    $list.hidden = false;
+    $doneList.hidden = true;
 })

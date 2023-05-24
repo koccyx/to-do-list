@@ -52,7 +52,7 @@ body ::-webkit-scrollbar {
     text-align: center;
     font-size: 40px;
 }
-.app__list {
+.list {
     border: 1px solid black;
     height: 200px;
     min-width: 100px;
@@ -111,11 +111,6 @@ body ::-webkit-scrollbar {
     cursor: pointer;
     background-color: #383131;
 }
-.btn__done {
-}
-.btn__remove {
-}
-
 ._done {
     text-decoration: line-through;
 }
