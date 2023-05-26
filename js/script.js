@@ -27,9 +27,20 @@ function update() {
                 </div>
                 `
             )
-         }
+        }
     }
 }
+
+window.addEventListener('unload', () => {
+    localStorage.setItem('taskArr', JSON.stringify(taskArr));
+})
+
+//DOMContentLoaded
+document.addEventListener('DOMContentLoaded',() => {
+    console.log(JSON.parse(localStorage.getItem('taskArr')));
+    taskArr.push(...JSON.parse(localStorage.getItem('taskArr')));
+    update();
+})
 
 
 $addBtn.addEventListener('click', (event) => {
